@@ -1,261 +1,301 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <KonnektingDevice xmlns="http://konnekting.de/xml/KonnektingDevice/v0">
-    <Device ManufacturerId="7070" DeviceId="102" Revision="1">
+    <Device ManufacturerId="7070" DeviceId="102" Revision="2">
         <ManufacturerName>KONNEKTING</ManufacturerName>
         <DeviceName>Dimmer 4CH UFI</DeviceName>
         <Parameters>
-            <ParameterGroup Name="General" Id="0">
-                <Parameter Id="0" IdName="dimmspeed">
-                    <Description>Dimming speed</Description>
-                    <Value Type="uint8" Default="01" Options="" Min="00" Max="3C"/>
+            <ParameterGroup Name="Channel 1" Id="0">
+                <Parameter Id="0" IdName="ch0_gamma">
+                    <Description>Gamma correction [value * 0.1]</Description>
+                    <Value Type="uint8" Default="1C" Options="" Min="0A" Max="32"/>
                 </Parameter>
-            </ParameterGroup>
-            <ParameterGroup Name="Channel 1" Id="1">
-                <Parameter Id="1" IdName="ch0_dimch">
-                    <Description>Dimming characterisitc</Description>
-                    <Value Type="uint8" Default="00" Options="00=1|01=2"/>
+                <Parameter Id="1" IdName="ch0_time_soft">
+                    <Description>Soft on/off time</Description>
+                    <Value Type="uint8" Default="02" Options="00=0ms|01=300ms|02=500ms|03=700ms|04=1s|05=1.5s|06=2s"/>
                 </Parameter>
-                <Parameter Id="2" IdName="ch0_day_min">
-                    <Description>Min Value Day [0..255]</Description>
-                    <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
+                <Parameter Id="2" IdName="ch0_time_rel">
+                    <Description>Relative dimming time</Description>
+                    <Value Type="uint8" Default="03" Options="00=2s|01=3s|02=4s|03=5s|04=6s|05=7s|06=8s|07=9s|08=10s|09=11s|0A=12s|0B=13s|0C=14s|0D=15s|0E=20s"/>
                 </Parameter>
-                <Parameter Id="3" IdName="ch0_day_max">
-                    <Description>Max Value Day [0..255]</Description>
+                <Parameter Id="3" IdName="ch0_day_min">
+                    <Description>Min. value day [0..254]</Description>
+                    <Value Type="uint8" Default="00" Options="" Min="00" Max="FE"/>
+                </Parameter>
+                <Parameter Id="4" IdName="ch0_day_max">
+                    <Description>Max. value day [1..255]</Description>
                     <Value Type="uint8" Default="FF" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="4" IdName="ch0_night_min">
-                    <Description>Min Value Night [0..255]</Description>
-                    <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
+                <Parameter Id="5" IdName="ch0_night_min">
+                    <Description>Min. value night [0..254]</Description>
+                    <Value Type="uint8" Default="00" Options="" Min="00" Max="FE"/>
                 </Parameter>
-                <Parameter Id="5" IdName="ch0_night_max">
-                    <Description>Max Value Night [0..255]</Description>
+                <Parameter Id="6" IdName="ch0_night_max">
+                    <Description>Max. value night [1..255]</Description>
                     <Value Type="uint8" Default="FF" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="6" IdName="ch0_sc0_nr">
+                <Parameter Id="7" IdName="ch0_sc0_nr">
                     <Description>Scene 1 number</Description>
                     <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4|04=5|05=6|06=7|07=8|08=9|09=10|0A=11|0B=12|0C=13|0D=14|0E=15|0F=16|10=17|11=18|12=19|13=20|14=21|15=22|16=23|17=24|18=25|19=26|1A=27|1B=28|1C=29|1D=30|1E=31|1F=32|20=33|21=34|22=35|23=36|24=37|25=38|26=39|27=40|28=41|29=42|2A=43|2B=44|2C=45|2D=46|2E=47|2F=48|30=49|31=50|32=51|33=52|34=53|35=54|36=55|37=56|38=57|39=58|3A=59|3B=60|3C=61|3D=62|3E=63|3F=64"/>
                 </Parameter>
-                <Parameter Id="7" IdName="ch0_sc0_value">
+                <Parameter Id="8" IdName="ch0_sc0_value">
                     <Description>Scene 1 value</Description>
                     <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="8" IdName="ch0_sc1_nr">
+                <Parameter Id="9" IdName="ch0_sc1_nr">
                     <Description>Scene 2 number</Description>
                     <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4|04=5|05=6|06=7|07=8|08=9|09=10|0A=11|0B=12|0C=13|0D=14|0E=15|0F=16|10=17|11=18|12=19|13=20|14=21|15=22|16=23|17=24|18=25|19=26|1A=27|1B=28|1C=29|1D=30|1E=31|1F=32|20=33|21=34|22=35|23=36|24=37|25=38|26=39|27=40|28=41|29=42|2A=43|2B=44|2C=45|2D=46|2E=47|2F=48|30=49|31=50|32=51|33=52|34=53|35=54|36=55|37=56|38=57|39=58|3A=59|3B=60|3C=61|3D=62|3E=63|3F=64"/>
                 </Parameter>
-                <Parameter Id="9" IdName="ch0_sc1_value">
+                <Parameter Id="10" IdName="ch0_sc1_value">
                     <Description>Scene 2 value</Description>
                     <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="10" IdName="ch0_sc2_nr">
+                <Parameter Id="11" IdName="ch0_sc2_nr">
                     <Description>Scene 3 number</Description>
                     <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4|04=5|05=6|06=7|07=8|08=9|09=10|0A=11|0B=12|0C=13|0D=14|0E=15|0F=16|10=17|11=18|12=19|13=20|14=21|15=22|16=23|17=24|18=25|19=26|1A=27|1B=28|1C=29|1D=30|1E=31|1F=32|20=33|21=34|22=35|23=36|24=37|25=38|26=39|27=40|28=41|29=42|2A=43|2B=44|2C=45|2D=46|2E=47|2F=48|30=49|31=50|32=51|33=52|34=53|35=54|36=55|37=56|38=57|39=58|3A=59|3B=60|3C=61|3D=62|3E=63|3F=64"/>
                 </Parameter>
-                <Parameter Id="11" IdName="ch0_sc2_value">
+                <Parameter Id="12" IdName="ch0_sc2_value">
                     <Description>Scene 3 value</Description>
                     <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="12" IdName="ch0_sc3_nr">
+                <Parameter Id="13" IdName="ch0_sc3_nr">
                     <Description>Scene 4 number</Description>
                     <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4|04=5|05=6|06=7|07=8|08=9|09=10|0A=11|0B=12|0C=13|0D=14|0E=15|0F=16|10=17|11=18|12=19|13=20|14=21|15=22|16=23|17=24|18=25|19=26|1A=27|1B=28|1C=29|1D=30|1E=31|1F=32|20=33|21=34|22=35|23=36|24=37|25=38|26=39|27=40|28=41|29=42|2A=43|2B=44|2C=45|2D=46|2E=47|2F=48|30=49|31=50|32=51|33=52|34=53|35=54|36=55|37=56|38=57|39=58|3A=59|3B=60|3C=61|3D=62|3E=63|3F=64"/>
                 </Parameter>
-                <Parameter Id="13" IdName="ch0_sc3_value">
+                <Parameter Id="14" IdName="ch0_sc3_value">
                     <Description>Scene 4 value</Description>
                     <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="14" IdName="ch0_sc4_nr">
+                <Parameter Id="15" IdName="ch0_sc4_nr">
                     <Description>Scene 5 number</Description>
-                    <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4"/>
+                    <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4|04=5|05=6|06=7|07=8|08=9|09=10|0A=11|0B=12|0C=13|0D=14|0E=15|0F=16|10=17|11=18|12=19|13=20|14=21|15=22|16=23|17=24|18=25|19=26|1A=27|1B=28|1C=29|1D=30|1E=31|1F=32|20=33|21=34|22=35|23=36|24=37|25=38|26=39|27=40|28=41|29=42|2A=43|2B=44|2C=45|2D=46|2E=47|2F=48|30=49|31=50|32=51|33=52|34=53|35=54|36=55|37=56|38=57|39=58|3A=59|3B=60|3C=61|3D=62|3E=63|3F=64"/>
                 </Parameter>
-                <Parameter Id="15" IdName="ch0_sc4_value">
+                <Parameter Id="16" IdName="ch0_sc4_value">
                     <Description>Scene 5 value</Description>
                     <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
                 </Parameter>
             </ParameterGroup>
-            <ParameterGroup Name="Channel 2" Id="2">
-                <Parameter Id="16" IdName="ch1_dimch">
-                    <Description>Dimming characterisitc</Description>
-                    <Value Type="uint8" Default="00" Options="00=1|01=2"/>
+            <ParameterGroup Name="Channel 2" Id="1">
+                <Parameter Id="17" IdName="ch1_gamma">
+                    <Description>Gamma correction [value * 0.1]</Description>
+                    <Value Type="uint8" Default="1C" Options="" Min="0A" Max="32"/>
                 </Parameter>
-                <Parameter Id="17" IdName="ch1_day_min">
-                    <Description>Min Value Night [0..255]</Description>
-                    <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
+                <Parameter Id="18" IdName="ch1_time_soft">
+                    <Description>Soft on/off time</Description>
+                    <Value Type="uint8" Default="02" Options="00=0ms|01=300ms|02=500ms|03=700ms|04=1s|05=1.5s|06=2s"/>
                 </Parameter>
-                <Parameter Id="18" IdName="ch1_day_max">
-                    <Description>Max Value Night [0..255]</Description>
+                <Parameter Id="19" IdName="ch1_time_rel">
+                    <Description>Relative dimming time</Description>
+                    <Value Type="uint8" Default="03" Options="00=2s|01=3s|02=4s|03=5s|04=6s|05=7s|06=8s|07=9s|08=10s|09=11s|0A=12s|0B=13s|0C=14s|0D=15s|0E=20s"/>
+                </Parameter>
+                <Parameter Id="20" IdName="ch1_day_min">
+                    <Description>Min. value day [0..254]</Description>
+                    <Value Type="uint8" Default="00" Options="" Min="00" Max="FE"/>
+                </Parameter>
+                <Parameter Id="21" IdName="ch1_day_max">
+                    <Description>Max. value day [1..255]</Description>
                     <Value Type="uint8" Default="FF" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="19" IdName="ch1_night_min">
-                    <Description>Min Value Night [0..255]</Description>
-                    <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
+                <Parameter Id="22" IdName="ch1_night_min">
+                    <Description>Min. value night [0..254]</Description>
+                    <Value Type="uint8" Default="00" Options="" Min="00" Max="FE"/>
                 </Parameter>
-                <Parameter Id="20" IdName="ch1_night_max">
-                    <Description>Max Value Night [0..255]</Description>
+                <Parameter Id="23" IdName="ch1_night_max">
+                    <Description>Max. value night [1..255]</Description>
                     <Value Type="uint8" Default="FF" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="21" IdName="ch1_sc0_nr">
+                <Parameter Id="24" IdName="ch1_sc0_nr">
                     <Description>Scene 1 number</Description>
                     <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4|04=5|05=6|06=7|07=8|08=9|09=10|0A=11|0B=12|0C=13|0D=14|0E=15|0F=16|10=17|11=18|12=19|13=20|14=21|15=22|16=23|17=24|18=25|19=26|1A=27|1B=28|1C=29|1D=30|1E=31|1F=32|20=33|21=34|22=35|23=36|24=37|25=38|26=39|27=40|28=41|29=42|2A=43|2B=44|2C=45|2D=46|2E=47|2F=48|30=49|31=50|32=51|33=52|34=53|35=54|36=55|37=56|38=57|39=58|3A=59|3B=60|3C=61|3D=62|3E=63|3F=64"/>
                 </Parameter>
-                <Parameter Id="22" IdName="ch1_sc0_value">
+                <Parameter Id="25" IdName="ch1_sc0_value">
                     <Description>Scene 1 value</Description>
                     <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="23" IdName="ch1_sc1_nr">
+                <Parameter Id="26" IdName="ch1_sc1_nr">
                     <Description>Scene 2 number</Description>
                     <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4|04=5|05=6|06=7|07=8|08=9|09=10|0A=11|0B=12|0C=13|0D=14|0E=15|0F=16|10=17|11=18|12=19|13=20|14=21|15=22|16=23|17=24|18=25|19=26|1A=27|1B=28|1C=29|1D=30|1E=31|1F=32|20=33|21=34|22=35|23=36|24=37|25=38|26=39|27=40|28=41|29=42|2A=43|2B=44|2C=45|2D=46|2E=47|2F=48|30=49|31=50|32=51|33=52|34=53|35=54|36=55|37=56|38=57|39=58|3A=59|3B=60|3C=61|3D=62|3E=63|3F=64"/>
                 </Parameter>
-                <Parameter Id="24" IdName="ch1_sc1_value">
+                <Parameter Id="27" IdName="ch1_sc1_value">
                     <Description>Scene 2 value</Description>
                     <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="25" IdName="ch1_sc2_nr">
+                <Parameter Id="28" IdName="ch1_sc2_nr">
                     <Description>Scene 3 number</Description>
                     <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4|04=5|05=6|06=7|07=8|08=9|09=10|0A=11|0B=12|0C=13|0D=14|0E=15|0F=16|10=17|11=18|12=19|13=20|14=21|15=22|16=23|17=24|18=25|19=26|1A=27|1B=28|1C=29|1D=30|1E=31|1F=32|20=33|21=34|22=35|23=36|24=37|25=38|26=39|27=40|28=41|29=42|2A=43|2B=44|2C=45|2D=46|2E=47|2F=48|30=49|31=50|32=51|33=52|34=53|35=54|36=55|37=56|38=57|39=58|3A=59|3B=60|3C=61|3D=62|3E=63|3F=64"/>
                 </Parameter>
-                <Parameter Id="26" IdName="ch1_sc2_value">
+                <Parameter Id="29" IdName="ch1_sc2_value">
                     <Description>Scene 3 value</Description>
                     <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="27" IdName="ch1_sc3_nr">
+                <Parameter Id="30" IdName="ch1_sc3_nr">
                     <Description>Scene 4 number</Description>
                     <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4|04=5|05=6|06=7|07=8|08=9|09=10|0A=11|0B=12|0C=13|0D=14|0E=15|0F=16|10=17|11=18|12=19|13=20|14=21|15=22|16=23|17=24|18=25|19=26|1A=27|1B=28|1C=29|1D=30|1E=31|1F=32|20=33|21=34|22=35|23=36|24=37|25=38|26=39|27=40|28=41|29=42|2A=43|2B=44|2C=45|2D=46|2E=47|2F=48|30=49|31=50|32=51|33=52|34=53|35=54|36=55|37=56|38=57|39=58|3A=59|3B=60|3C=61|3D=62|3E=63|3F=64"/>
                 </Parameter>
-                <Parameter Id="28" IdName="ch1_sc3_value">
+                <Parameter Id="31" IdName="ch1_sc3_value">
                     <Description>Scene 4 value</Description>
                     <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="29" IdName="ch1_sc4_nr">
+                <Parameter Id="32" IdName="ch1_sc4_nr">
                     <Description>Scene 5 number</Description>
-                    <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4"/>
+                    <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4|04=5|05=6|06=7|07=8|08=9|09=10|0A=11|0B=12|0C=13|0D=14|0E=15|0F=16|10=17|11=18|12=19|13=20|14=21|15=22|16=23|17=24|18=25|19=26|1A=27|1B=28|1C=29|1D=30|1E=31|1F=32|20=33|21=34|22=35|23=36|24=37|25=38|26=39|27=40|28=41|29=42|2A=43|2B=44|2C=45|2D=46|2E=47|2F=48|30=49|31=50|32=51|33=52|34=53|35=54|36=55|37=56|38=57|39=58|3A=59|3B=60|3C=61|3D=62|3E=63|3F=64"/>
                 </Parameter>
-                <Parameter Id="30" IdName="ch1_sc4_value">
+                <Parameter Id="33" IdName="ch1_sc4_value">
                     <Description>Scene 5 value</Description>
                     <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
                 </Parameter>
             </ParameterGroup>
-            <ParameterGroup Name="Channel 3" Id="3">
-                <Parameter Id="31" IdName="ch2_dimch">
-                    <Description>Dimming characterisitc</Description>
-                    <Value Type="uint8" Default="00" Options="00=1|01=2"/>
+            <ParameterGroup Name="Channel 3" Id="2">
+                <Parameter Id="34" IdName="ch2_gamma">
+                    <Description>Gamma correction [value * 0.1]</Description>
+                    <Value Type="uint8" Default="1C" Options="" Min="0A" Max="32"/>
                 </Parameter>
-                <Parameter Id="32" IdName="ch2_day_min">
-                    <Description>Min Value Night [0..255]</Description>
-                    <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
+                <Parameter Id="35" IdName="ch2_time_soft">
+                    <Description>Soft on/off time</Description>
+                    <Value Type="uint8" Default="02" Options="00=0ms|01=300ms|02=500ms|03=700ms|04=1s|05=1.5s|06=2s"/>
                 </Parameter>
-                <Parameter Id="33" IdName="ch2_day_max">
-                    <Description>Max Value Night [0..255]</Description>
+                <Parameter Id="36" IdName="ch2_time_rel">
+                    <Description>Relative dimming time</Description>
+                    <Value Type="uint8" Default="03" Options="00=2s|01=3s|02=4s|03=5s|04=6s|05=7s|06=8s|07=9s|08=10s|09=11s|0A=12s|0B=13s|0C=14s|0D=15s|0E=20s"/>
+                </Parameter>
+                <Parameter Id="37" IdName="ch2_day_min">
+                    <Description>Min. value day [0..254]</Description>
+                    <Value Type="uint8" Default="00" Options="" Min="00" Max="FE"/>
+                </Parameter>
+                <Parameter Id="38" IdName="ch2_day_max">
+                    <Description>Max. value day [1..255]</Description>
                     <Value Type="uint8" Default="FF" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="34" IdName="ch2_night_min">
-                    <Description>Min Value Night [0..255]</Description>
-                    <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
+                <Parameter Id="39" IdName="ch2_night_min">
+                    <Description>Min. value night [0..254]</Description>
+                    <Value Type="uint8" Default="00" Options="" Min="00" Max="FE"/>
                 </Parameter>
-                <Parameter Id="35" IdName="ch2_night_max">
-                    <Description>Max Value Night [0..255]</Description>
+                <Parameter Id="40" IdName="ch2_night_max">
+                    <Description>Max. value night [1..255]</Description>
                     <Value Type="uint8" Default="FF" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="36" IdName="ch2_sc0_nr">
+                <Parameter Id="41" IdName="ch2_sc0_nr">
                     <Description>Scene 1 number</Description>
                     <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4|04=5|05=6|06=7|07=8|08=9|09=10|0A=11|0B=12|0C=13|0D=14|0E=15|0F=16|10=17|11=18|12=19|13=20|14=21|15=22|16=23|17=24|18=25|19=26|1A=27|1B=28|1C=29|1D=30|1E=31|1F=32|20=33|21=34|22=35|23=36|24=37|25=38|26=39|27=40|28=41|29=42|2A=43|2B=44|2C=45|2D=46|2E=47|2F=48|30=49|31=50|32=51|33=52|34=53|35=54|36=55|37=56|38=57|39=58|3A=59|3B=60|3C=61|3D=62|3E=63|3F=64"/>
                 </Parameter>
-                <Parameter Id="37" IdName="ch2_sc0_value">
+                <Parameter Id="42" IdName="ch2_sc0_value">
                     <Description>Scene 1 value</Description>
                     <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="38" IdName="ch2_sc1_nr">
+                <Parameter Id="43" IdName="ch2_sc1_nr">
                     <Description>Scene 2 number</Description>
                     <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4|04=5|05=6|06=7|07=8|08=9|09=10|0A=11|0B=12|0C=13|0D=14|0E=15|0F=16|10=17|11=18|12=19|13=20|14=21|15=22|16=23|17=24|18=25|19=26|1A=27|1B=28|1C=29|1D=30|1E=31|1F=32|20=33|21=34|22=35|23=36|24=37|25=38|26=39|27=40|28=41|29=42|2A=43|2B=44|2C=45|2D=46|2E=47|2F=48|30=49|31=50|32=51|33=52|34=53|35=54|36=55|37=56|38=57|39=58|3A=59|3B=60|3C=61|3D=62|3E=63|3F=64"/>
                 </Parameter>
-                <Parameter Id="39" IdName="ch2_sc1_value">
+                <Parameter Id="44" IdName="ch2_sc1_value">
                     <Description>Scene 2 value</Description>
                     <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="40" IdName="ch2_sc2_nr">
+                <Parameter Id="45" IdName="ch2_sc2_nr">
                     <Description>Scene 3 number</Description>
                     <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4|04=5|05=6|06=7|07=8|08=9|09=10|0A=11|0B=12|0C=13|0D=14|0E=15|0F=16|10=17|11=18|12=19|13=20|14=21|15=22|16=23|17=24|18=25|19=26|1A=27|1B=28|1C=29|1D=30|1E=31|1F=32|20=33|21=34|22=35|23=36|24=37|25=38|26=39|27=40|28=41|29=42|2A=43|2B=44|2C=45|2D=46|2E=47|2F=48|30=49|31=50|32=51|33=52|34=53|35=54|36=55|37=56|38=57|39=58|3A=59|3B=60|3C=61|3D=62|3E=63|3F=64"/>
                 </Parameter>
-                <Parameter Id="41" IdName="ch2_sc2_value">
+                <Parameter Id="46" IdName="ch2_sc2_value">
                     <Description>Scene 3 value</Description>
                     <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="42" IdName="ch2_sc3_nr">
+                <Parameter Id="47" IdName="ch2_sc3_nr">
                     <Description>Scene 4 number</Description>
                     <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4|04=5|05=6|06=7|07=8|08=9|09=10|0A=11|0B=12|0C=13|0D=14|0E=15|0F=16|10=17|11=18|12=19|13=20|14=21|15=22|16=23|17=24|18=25|19=26|1A=27|1B=28|1C=29|1D=30|1E=31|1F=32|20=33|21=34|22=35|23=36|24=37|25=38|26=39|27=40|28=41|29=42|2A=43|2B=44|2C=45|2D=46|2E=47|2F=48|30=49|31=50|32=51|33=52|34=53|35=54|36=55|37=56|38=57|39=58|3A=59|3B=60|3C=61|3D=62|3E=63|3F=64"/>
                 </Parameter>
-                <Parameter Id="43" IdName="ch2_sc3_value">
+                <Parameter Id="48" IdName="ch2_sc3_value">
                     <Description>Scene 4 value</Description>
                     <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="44" IdName="ch2_sc4_nr">
+                <Parameter Id="49" IdName="ch2_sc4_nr">
                     <Description>Scene 5 number</Description>
-                    <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4"/>
+                    <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4|04=5|05=6|06=7|07=8|08=9|09=10|0A=11|0B=12|0C=13|0D=14|0E=15|0F=16|10=17|11=18|12=19|13=20|14=21|15=22|16=23|17=24|18=25|19=26|1A=27|1B=28|1C=29|1D=30|1E=31|1F=32|20=33|21=34|22=35|23=36|24=37|25=38|26=39|27=40|28=41|29=42|2A=43|2B=44|2C=45|2D=46|2E=47|2F=48|30=49|31=50|32=51|33=52|34=53|35=54|36=55|37=56|38=57|39=58|3A=59|3B=60|3C=61|3D=62|3E=63|3F=64"/>
                 </Parameter>
-                <Parameter Id="45" IdName="ch2_sc4_value">
+                <Parameter Id="50" IdName="ch2_sc4_value">
                     <Description>Scene 5 value</Description>
                     <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
                 </Parameter>
             </ParameterGroup>
-            <ParameterGroup Name="Channel 4" Id="4">
-                <Parameter Id="46" IdName="ch3_dimch">
-                    <Description>Dimming characterisitc</Description>
-                    <Value Type="uint8" Default="00" Options="00=1|01=2"/>
+            <ParameterGroup Name="Channel 4" Id="3">
+                <Parameter Id="51" IdName="ch3_gamma">
+                    <Description>Gamma correction [value * 0.1]</Description>
+                    <Value Type="uint8" Default="1C" Options="" Min="0A" Max="32"/>
                 </Parameter>
-                <Parameter Id="47" IdName="ch3_day_min">
-                    <Description>Min Value Night [0..255]</Description>
-                    <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
+                <Parameter Id="52" IdName="ch3_time_soft">
+                    <Description>Soft on/off time</Description>
+                    <Value Type="uint8" Default="02" Options="00=0ms|01=300ms|02=500ms|03=700ms|04=1s|05=1.5s|06=2s"/>
                 </Parameter>
-                <Parameter Id="48" IdName="ch3_day_max">
-                    <Description>Max Value Night [0..255]</Description>
+                <Parameter Id="53" IdName="ch3_time_rel">
+                    <Description>Relative dimming time</Description>
+                    <Value Type="uint8" Default="03" Options="00=2s|01=3s|02=4s|03=5s|04=6s|05=7s|06=8s|07=9s|08=10s|09=11s|0A=12s|0B=13s|0C=14s|0D=15s|0E=20s"/>
+                </Parameter>
+                <Parameter Id="54" IdName="ch3_day_min">
+                    <Description>Min. value day [0..254]</Description>
+                    <Value Type="uint8" Default="00" Options="" Min="00" Max="FE"/>
+                </Parameter>
+                <Parameter Id="55" IdName="ch3_day_max">
+                    <Description>Max. value day [1..255]</Description>
                     <Value Type="uint8" Default="FF" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="49" IdName="ch3_night_min">
-                    <Description>Min Value Night [0..255]</Description>
-                    <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
+                <Parameter Id="56" IdName="ch3_night_min">
+                    <Description>Min. value night [0..254]</Description>
+                    <Value Type="uint8" Default="00" Options="" Min="00" Max="FE"/>
                 </Parameter>
-                <Parameter Id="50" IdName="ch3_night_max">
-                    <Description>Max Value Night [0..255]</Description>
+                <Parameter Id="57" IdName="ch3_night_max">
+                    <Description>Max. value night [1..255]</Description>
                     <Value Type="uint8" Default="FF" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="51" IdName="ch3_sc0_nr">
+                <Parameter Id="58" IdName="ch3_sc0_nr">
                     <Description>Scene 1 number</Description>
                     <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4|04=5|05=6|06=7|07=8|08=9|09=10|0A=11|0B=12|0C=13|0D=14|0E=15|0F=16|10=17|11=18|12=19|13=20|14=21|15=22|16=23|17=24|18=25|19=26|1A=27|1B=28|1C=29|1D=30|1E=31|1F=32|20=33|21=34|22=35|23=36|24=37|25=38|26=39|27=40|28=41|29=42|2A=43|2B=44|2C=45|2D=46|2E=47|2F=48|30=49|31=50|32=51|33=52|34=53|35=54|36=55|37=56|38=57|39=58|3A=59|3B=60|3C=61|3D=62|3E=63|3F=64"/>
                 </Parameter>
-                <Parameter Id="52" IdName="ch3_sc0_value">
+                <Parameter Id="59" IdName="ch3_sc0_value">
                     <Description>Scene 1 value</Description>
                     <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="53" IdName="ch3_sc1_nr">
+                <Parameter Id="60" IdName="ch3_sc1_nr">
                     <Description>Scene 2 number</Description>
                     <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4|04=5|05=6|06=7|07=8|08=9|09=10|0A=11|0B=12|0C=13|0D=14|0E=15|0F=16|10=17|11=18|12=19|13=20|14=21|15=22|16=23|17=24|18=25|19=26|1A=27|1B=28|1C=29|1D=30|1E=31|1F=32|20=33|21=34|22=35|23=36|24=37|25=38|26=39|27=40|28=41|29=42|2A=43|2B=44|2C=45|2D=46|2E=47|2F=48|30=49|31=50|32=51|33=52|34=53|35=54|36=55|37=56|38=57|39=58|3A=59|3B=60|3C=61|3D=62|3E=63|3F=64"/>
                 </Parameter>
-                <Parameter Id="54" IdName="ch3_sc1_value">
+                <Parameter Id="61" IdName="ch3_sc1_value">
                     <Description>Scene 2 value</Description>
                     <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="55" IdName="ch3_sc2_nr">
+                <Parameter Id="62" IdName="ch3_sc2_nr">
                     <Description>Scene 3 number</Description>
                     <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4|04=5|05=6|06=7|07=8|08=9|09=10|0A=11|0B=12|0C=13|0D=14|0E=15|0F=16|10=17|11=18|12=19|13=20|14=21|15=22|16=23|17=24|18=25|19=26|1A=27|1B=28|1C=29|1D=30|1E=31|1F=32|20=33|21=34|22=35|23=36|24=37|25=38|26=39|27=40|28=41|29=42|2A=43|2B=44|2C=45|2D=46|2E=47|2F=48|30=49|31=50|32=51|33=52|34=53|35=54|36=55|37=56|38=57|39=58|3A=59|3B=60|3C=61|3D=62|3E=63|3F=64"/>
                 </Parameter>
-                <Parameter Id="56" IdName="ch3_sc2_value">
+                <Parameter Id="63" IdName="ch3_sc2_value">
                     <Description>Scene 3 value</Description>
                     <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="57" IdName="ch3_sc3_nr">
+                <Parameter Id="64" IdName="ch3_sc3_nr">
                     <Description>Scene 4 number</Description>
                     <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4|04=5|05=6|06=7|07=8|08=9|09=10|0A=11|0B=12|0C=13|0D=14|0E=15|0F=16|10=17|11=18|12=19|13=20|14=21|15=22|16=23|17=24|18=25|19=26|1A=27|1B=28|1C=29|1D=30|1E=31|1F=32|20=33|21=34|22=35|23=36|24=37|25=38|26=39|27=40|28=41|29=42|2A=43|2B=44|2C=45|2D=46|2E=47|2F=48|30=49|31=50|32=51|33=52|34=53|35=54|36=55|37=56|38=57|39=58|3A=59|3B=60|3C=61|3D=62|3E=63|3F=64"/>
                 </Parameter>
-                <Parameter Id="58" IdName="ch3_sc3_value">
+                <Parameter Id="65" IdName="ch3_sc3_value">
                     <Description>Scene 4 value</Description>
                     <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
                 </Parameter>
-                <Parameter Id="59" IdName="ch3_sc4_nr">
+                <Parameter Id="66" IdName="ch3_sc4_nr">
                     <Description>Scene 5 number</Description>
-                    <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4"/>
+                    <Value Type="uint8" Default="FF" Options="FF=inactive|00=1|01=2|02=3|03=4|04=5|05=6|06=7|07=8|08=9|09=10|0A=11|0B=12|0C=13|0D=14|0E=15|0F=16|10=17|11=18|12=19|13=20|14=21|15=22|16=23|17=24|18=25|19=26|1A=27|1B=28|1C=29|1D=30|1E=31|1F=32|20=33|21=34|22=35|23=36|24=37|25=38|26=39|27=40|28=41|29=42|2A=43|2B=44|2C=45|2D=46|2E=47|2F=48|30=49|31=50|32=51|33=52|34=53|35=54|36=55|37=56|38=57|39=58|3A=59|3B=60|3C=61|3D=62|3E=63|3F=64"/>
                 </Parameter>
-                <Parameter Id="60" IdName="ch3_sc4_value">
+                <Parameter Id="67" IdName="ch3_sc4_value">
                     <Description>Scene 5 value</Description>
                     <Value Type="uint8" Default="00" Options="" Min="00" Max="FF"/>
+                </Parameter>
+            </ParameterGroup>
+            <ParameterGroup Name="Power supply control" Id="4">
+                <Parameter Id="68" IdName="ps_control">
+                    <Description>Automatic powersupply control</Description>
+                    <Value Type="uint8" Default="00" Options="00=no|01=yes"/>
+                </Parameter>
+                <Parameter Id="69" IdName="ps_delay_on">
+                    <Description>Power supply on delay [0..3000ms]</Description>
+                    <Value Type="uint16" Default="01F4" Options="" Min="0000" Max="0BB8"/>
+                </Parameter>
+                <Parameter Id="70" IdName="ps_delay_off">
+                    <Description>Power supply off after [0..180min]</Description>
+                    <Value Type="uint8" Default="1E" Options="" Min="00" Max="B4"/>
                 </Parameter>
             </ParameterGroup>
         </Parameters>
@@ -410,7 +450,19 @@
                 <DataPointType>1.001</DataPointType>
                 <Flags>43</Flags>
             </CommObject>
-            <CommObject Id="25" IdName="all_ch_sc">
+            <CommObject Id="25" IdName="power_supply">
+                <Name>Power supply</Name>
+                <Function>Switch</Function>
+                <DataPointType>1.001</DataPointType>
+                <Flags>52</Flags>
+            </CommObject>
+            <CommObject Id="26" IdName="power_supply_input">
+                <Name>Power supply</Name>
+                <Function>Input</Function>
+                <DataPointType>1.001</DataPointType>
+                <Flags>43</Flags>
+            </CommObject>
+            <CommObject Id="27" IdName="all_ch_sc">
                 <Name>Scene all channels</Name>
                 <Function>Scene</Function>
                 <DataPointType>17.001</DataPointType>

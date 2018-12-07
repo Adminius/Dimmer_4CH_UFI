@@ -1,4 +1,4 @@
-void setDayNightValues(bool night){
+void setNightValues(bool night){
     if(night){
         //night values
         for(byte ch = 0;ch < CHANNELS; ch++){
@@ -26,7 +26,7 @@ void taskDimUpDownStop(byte channel, byte value){
     byte step = value & DPT3_007_MASK_STEP;
     //true = increase, false = decrease
     bool direction = value & DPT3_007_MASK_DIRECTION;
-    Debug.println(F("value: %d, step: %d, direction: %d"),value,step,direction);
+    Debug.println(F("value: %d, step: %d, direction: %d"), value, step, direction);
     //if step == B?????000 then stop
     if(step == DPT3_007_STOP)
         channels[channel].taskStop();
@@ -54,8 +54,8 @@ void taskScene(byte channel, byte value){
 void knxEvents(byte comObjIndex) {
     byte channel = floor((comObjIndex-FIRST_KNX_OBJ) / COMOBJ_PER_CHANEL); 
     byte newTask = ((comObjIndex-FIRST_KNX_OBJ) % COMOBJ_PER_CHANEL);
-    if (channel < CHANNELS){ 
-        Debug.println(F("comObjIndex: %d channel: %d newTask: %d"),comObjIndex,channel,newTask);
+    if(channel < CHANNELS){ 
+        Debug.println(F("comObjIndex: %d channel: %d newTask: %d"), comObjIndex, channel, newTask);
         switch (newTask){
             case 0 : // Switch
                 taskSoftOnOff(channel, Knx.read(comObjIndex));
@@ -76,15 +76,19 @@ void knxEvents(byte comObjIndex) {
                 break;
         }
     }
-    if (comObjIndex == COMOBJ_night){
-        setDayNightValues(Knx.read(COMOBJ_night));
-        Debug.println(F("comObjIndex: %d nightMode: %d"),comObjIndex,Knx.read(COMOBJ_night));
+    if(comObjIndex == COMOBJ_night){
+        setNightValues(Knx.read(comObjIndex));
+        Debug.println(F("comObjIndex: %d nightMode: %d"), comObjIndex, Knx.read(comObjIndex));
+    }
+    if(comObjIndex == COMOBJ_power_supply_input){
+        powerSupplyState = Knx.read(comObjIndex);
+        Debug.println(F("comObjIndex: %d power supply: %d"), comObjIndex, powerSupplyState);
     }
     //workaround until beta5
-    if (comObjIndex == COMOBJ_all_ch_sc){
-        for(byte ch = 0;ch < CHANNELS; ch++){
-            taskScene(ch,Knx.read(comObjIndex));
+    if(comObjIndex == COMOBJ_all_ch_sc){
+        Debug.println(F("comObjIndex: %d all scenes: %d"), comObjIndex, Knx.read(comObjIndex));
+        for(byte ch = 0; ch < CHANNELS; ch++){
+            taskScene(ch, Knx.read(comObjIndex));
         }
     }
 }
-
