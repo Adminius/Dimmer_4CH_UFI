@@ -286,7 +286,7 @@
             </ParameterGroup>
             <ParameterGroup Name="Power supply control" Id="4">
                 <Parameter Id="68" IdName="ps_control">
-                    <Description>Automatic powersupply control</Description>
+                    <Description>Automatic power supply control</Description>
                     <Value Type="uint8" Default="00" Options="00=no|01=yes"/>
                 </Parameter>
                 <Parameter Id="69" IdName="ps_delay_on">
@@ -469,5 +469,11 @@
                 <Flags>42</Flags>
             </CommObject>
         </CommObjects>
+        <Dependencies>
+            <ParameterDependency ParamId="69" TestParamId="68" Test="eq" TestValue="01"/>
+            <ParameterDependency ParamId="70" TestParamId="68" Test="eq" TestValue="01"/>
+            <CommObjectDependency CommObjId="25" TestParamId="68" Test="eq" TestValue="01"/>
+            <CommObjectDependency CommObjId="26" TestParamId="68" Test="eq" TestValue="01"/>
+        </Dependencies>
     </Device>
 </KonnektingDevice>
