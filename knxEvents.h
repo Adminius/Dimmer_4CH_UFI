@@ -81,8 +81,8 @@ void knxEvents(byte comObjIndex) {
         Debug.println(F("comObjIndex: %d nightMode: %d"), comObjIndex, Knx.read(comObjIndex));
     }
     if(comObjIndex == COMOBJ_power_supply_input){
-        powerSupplyState = Knx.read(comObjIndex);
-        Debug.println(F("comObjIndex: %d power supply: %d"), comObjIndex, powerSupplyState);
+        powerSupplyStateExternal = Knx.read(comObjIndex);
+        Debug.println(F("comObjIndex: %d power supply: %d"), comObjIndex, powerSupplyStateExternal);
     }
     //workaround until beta5
     if(comObjIndex == COMOBJ_all_ch_sc){

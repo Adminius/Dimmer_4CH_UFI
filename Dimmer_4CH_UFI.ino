@@ -37,27 +37,20 @@
 #define FIRST_KNX_OBJ 0       // task 0, channel 0
 #define SCENES 5              // scenes per channel
 
-byte currentValue[CHANNELS];
-bool lastState[CHANNELS];
 byte valueMinDay[CHANNELS];
 byte valueMaxDay[CHANNELS];
 byte valueMinNight[CHANNELS];
 byte valueMaxNight[CHANNELS];
 byte sceneActive[CHANNELS][SCENES];
 byte sceneValue[CHANNELS][SCENES];
-float gamma[CHANNELS] = {2.0, 2.0, 2.0, 2.0};
+float gammaCorection[CHANNELS];
 byte softOnOffTimeList[] = {0,3,5,7,10,15,20}; //hundreds of milliseconds: 0,300,500...
 byte relDimTimeList[] = {2,3,4,5,6,7,8,9,10,11,12,13,14,15,20}; //seconds
-bool powerSupplyState = false;
-bool powerSupplyStateLast = false;
+bool powerSupplyStateExternal = false;
+bool powerSupplyTurnOnRequestLast = false;
 bool powerSupplyControl = false;
 word powerSupplyOnDelay = 0;
 unsigned long powerSupplyOffDelay = 0;
-
-#define NO_TASK 0xFF
-
-byte newTaskType[CHANNELS];
-byte newTaskValue[CHANNELS];
 
 //all Pins are inverted
 Dimmer32u4 pins[] = {
@@ -75,9 +68,9 @@ DimmerControl channels[] = {
     DimmerControl(3)
 };
 
-word getLogValue(byte index, float gamma, byte startValue, word maxValue, word steps){
+word getLogValue(byte index, float newGamma, byte startValue, word maxValue, word steps){
     if (index > 0){
-        word result = round(pow((float)index / (float)(steps - 1.0), gamma) * (float)(maxValue - startValue) + startValue);
+        word result = round(pow((float)index / (float)(steps - 1.0), newGamma) * (float)(maxValue - startValue) + startValue);
         if(result > maxValue)
             return maxValue;
         else
@@ -88,16 +81,15 @@ word getLogValue(byte index, float gamma, byte startValue, word maxValue, word s
 }
 
 void setChannelValue(byte channel, byte index){
-    pins[channel].setValue(getLogValue(index, gamma[channel], PWM_START_VALUE, PWM_MAX_VALUE, PWM_STEPS));
+    pins[channel].setValue(getLogValue(index, gammaCorection[channel], PWM_START_VALUE, PWM_MAX_VALUE, PWM_STEPS));
 }
 
 
 #include "knxEvents.h"
 
 //interrupt every 1ms
-SIGNAL(TIMER0_COMPA_vect) 
-{
-    for(byte ch = 0; ch < CHANNELS;ch++){
+SIGNAL(TIMER0_COMPA_vect){
+    for(byte ch = 0; ch < CHANNELS; ch++){
         channels[ch].task();
     }
 }
@@ -122,15 +114,12 @@ void setup(){
 
     //channel settings
     for(byte ch = 0; ch < CHANNELS; ch++){
-        //on start all channels are off
-        lastState[ch] = false;
-        newTaskType[ch] = NO_TASK;
         //set function that should be called to control output
         channels[ch].setValueIdFunction(&setChannelValue);
         //init pwm
         pins[ch].init();
-        //read paramters
-        gamma[ch] = Konnekting.getUINT8Param(ch * PARAMS_PER_CHANNEL+FIRST_PARAM + 0) * 0.1;
+        //read parameters
+        gammaCorection[ch] = Konnekting.getUINT8Param(ch * PARAMS_PER_CHANNEL+FIRST_PARAM + 0) * 0.1;
         channels[ch].setDurationAbsolute(softOnOffTimeList[Konnekting.getUINT8Param(ch * PARAMS_PER_CHANNEL + FIRST_PARAM + 1)] * 100);
         channels[ch].setDurationRelative(relDimTimeList[Konnekting.getUINT8Param(ch * PARAMS_PER_CHANNEL + FIRST_PARAM + 2)] * 1000);
         valueMinDay[ch] = Konnekting.getUINT8Param(ch * PARAMS_PER_CHANNEL+FIRST_PARAM + 3);
@@ -158,11 +147,11 @@ void loop(){
         
         //assumption: all channels are off -> power supply must be off
         bool powerSupplyStateTemp = false;
+        bool powerSupplyTurnOnRequest = false;
         
         //we got from external source, that power supply is already on
-        if(powerSupplyState){
+        if(powerSupplyStateExternal){
             powerSupplyStateTemp = true;
-            powerSupplyStateLast = true;
         }
             
         for(byte ch = 0; ch < CHANNELS; ch++){
@@ -178,12 +167,31 @@ void loop(){
                 Debug.println(F("Send to Obj: %d value: %d"), ch * COMOBJ_PER_CHANEL + FIRST_KNX_OBJ + 5, channels[ch].getCurrentValue());
                 channels[ch].resetUpdateFlag();
             }
+            //check if power supply should be turned on
+            if(channels[ch].getPowerSupplyOnRequest()){
+                powerSupplyTurnOnRequest = true;
+            }
             //check if at least one channel is on -> power supply must be on
             if(channels[ch].getPowerSupplyState()){
                 powerSupplyStateTemp = true;
             }
         }
         
+        //power supply control
+        if(powerSupplyControl){
+            //power supply is off, but should be on => turn it on
+            if(!powerSupplyStateTemp && powerSupplyTurnOnRequest && !powerSupplyTurnOnRequestLast){
+                Knx.write(COMOBJ_power_supply,DPT1_001_on);
+                Debug.println(F("Send to Obj: %d PowerSupply on"),COMOBJ_power_supply);
+                powerSupplyTurnOnRequestLast = powerSupplyTurnOnRequest;
+            }
+            //power supply should be off
+            if(!powerSupplyStateTemp && !powerSupplyTurnOnRequest && powerSupplyTurnOnRequestLast){
+                Knx.write(COMOBJ_power_supply,DPT1_001_off);
+                Debug.println(F("Send to Obj: %d PowerSupply off"),COMOBJ_power_supply);
+                powerSupplyTurnOnRequestLast = powerSupplyTurnOnRequest;
+            }
+        }
         //notify all channels about power supply state
         if(powerSupplyStateTemp){
             //if power supply is on, we don't need delay any more for other channels -> set on-delay to 0 for all, because it easier
@@ -195,19 +203,6 @@ void loop(){
             for(byte ch = 0; ch < CHANNELS; ch++){
                 channels[ch].setPowerSupplyOnDelay(powerSupplyOnDelay);
             }
-        }
-        
-        //power supply control
-        if(powerSupplyControl && powerSupplyStateTemp != powerSupplyStateLast){
-           Debug.println(F("powerSupplyStateTemp: %d"),powerSupplyStateTemp);
-            if(powerSupplyStateTemp){
-                Knx.write(COMOBJ_power_supply,DPT1_001_on);
-                Debug.println(F("Send to Obj: %d PowerSupply on"),COMOBJ_power_supply);
-            }else{
-                Knx.write(COMOBJ_power_supply,DPT1_001_off);
-                Debug.println(F("Send to Obj: %d PowerSupply off"),COMOBJ_power_supply);
-            }
-            powerSupplyStateLast = powerSupplyStateTemp;
         }
     }
 }
