@@ -9,13 +9,19 @@
 #define KNX_SERIAL Serial1
 
 //libraries
-#include <Dimmer32u4.h>        //http://librarymanager/All#Dimmer32u4
 #include <DimmerControl.h>     //http://librarymanager/All#DimmerControl
 #include <KonnektingDevice.h>  //http://librarymanager/All#Konnekting
 #include "kdevice_Dimmer_4CH_UFI.h"
+#include <PCA9685.h>
+
+//PCAlib setup
+PCA9685 pwmController; // Address pins A5-A0 set to B000000, default mode settings
+#define PCA9685_ChannelUpdateMode_AfterAck;
+
+
 
 //Debug
-//#define KDEBUG // comment this line to disable DEBUG mode
+#define KDEBUG // comment this line to disable DEBUG mode
 #ifdef KDEBUG
 #include <DebugUtil.h>
 #define DEBUGSERIAL Serial
@@ -52,13 +58,7 @@ bool powerSupplyControl = false;
 word powerSupplyOnDelay = 0;
 unsigned long powerSupplyOffDelay = 0;
 
-//all Pins are inverted
-Dimmer32u4 pins[] = {
-    Dimmer32u4(5,true),
-    Dimmer32u4(9,true),
-    Dimmer32u4(10,true),
-    Dimmer32u4(11,true)
-};
+
 
 //create array of DimmerControls
 DimmerControl channels[] = {
@@ -81,7 +81,7 @@ word getLogValue(byte index, float newGamma, byte startValue, word maxValue, wor
 }
 
 void setChannelValue(byte channel, byte index){
-    pins[channel].setValue(getLogValue(index, gammaCorection[channel], PWM_START_VALUE, PWM_MAX_VALUE, PWM_STEPS));
+  pwmController.setChannelPWM(channel,getLogValue(index, gammaCorection[channel], PWM_START_VALUE, PWM_MAX_VALUE, PWM_STEPS));
 }
 
 
@@ -112,12 +112,18 @@ void setup(){
     powerSupplyOnDelay = Konnekting.getUINT16Param(PARAM_ps_delay_on); //milliseconds
     powerSupplyOffDelay = Konnekting.getUINT8Param(PARAM_ps_delay_off) * 60000; //minutes
 
+    //PCA9685 setup
+  Wire.begin();                       // Wire must be started first
+    Wire.setClock(400000);              // Supported baud rates are 100kHz, 400kHz, and 1000kHz
+    pwmController.resetDevices();
+    pwmController.init(PCA9685_PhaseBalancer_None);    
+    pwmController.setPWMFrequency(1500);
+
+
     //channel settings
     for(byte ch = 0; ch < CHANNELS; ch++){
         //set function that should be called to control output
         channels[ch].setValueIdFunction(&setChannelValue);
-        //init pwm
-        pins[ch].init();
         //read parameters
         gammaCorection[ch] = Konnekting.getUINT8Param(ch * PARAMS_PER_CHANNEL+FIRST_PARAM + 0) * 0.1;
         channels[ch].setDurationAbsolute(softOnOffTimeList[Konnekting.getUINT8Param(ch * PARAMS_PER_CHANNEL + FIRST_PARAM + 1)] * 100);
