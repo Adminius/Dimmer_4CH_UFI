@@ -5,7 +5,7 @@
         <DeviceName>Dimmer 4CH UFI</DeviceName>
         <Parameters>
             <ParameterGroup Name="Channel 1" Id="0">
-                <Parameter Id="70" IdName="ch0_gamma">
+                <Parameter Id="0" IdName="ch0_gamma">
                     <Description>Gamma correction [value * 0.1]</Description>
                     <Value Type="uint8" Default="14" Options="" Min="0A" Max="32"/>
                 </Parameter>
